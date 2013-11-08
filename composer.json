@@ -1,0 +1,25 @@
+{
+    "name": "zachgarwood/datatable",
+    "description": "A basic PHP data table object",
+    "version": "0.1.0",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Zach Garwood",
+            "email": "zachgarwood@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"   
+    },
+    "autoload": {
+        "psr-0": {
+            "DataTable\\": "library/"
+        }
+    }
+}
