@@ -8,11 +8,16 @@ class Cell
         $value;
 
     private
-        $_column;
+        $column;
 
     public function __construct(Column $column, $value, $label = null)
     {
-        $this->_column = $column;
+        $this->column = $column;
+        if (!$this->column->isValueValidType($value)) {
+            throw new \InvalidArgumentException(
+                "'$value' is not of type '{$column->getType()}'!"
+            );
+        }
         $this->value = $value;
         $this->label = $label;
 
@@ -21,7 +26,7 @@ class Cell
 
     public function getColumn()
     {
-        return $this->_column;
+        return $this->column;
     }
 }
 

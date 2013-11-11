@@ -10,12 +10,8 @@ class Column
         TYPE_NUMBER = 'number',
         TYPE_STRING = 'string';
 
-    private
-        $_label,
-        $_type;
-
-    private static
-        $_types = [
+    public static
+        $types = [
             self::TYPE_BOOLEAN,
             self::TYPE_DATE,
             self::TYPE_DATETIME,
@@ -23,35 +19,62 @@ class Column
             self::TYPE_STRING,
         ];
 
+    private
+        $label,
+        $type;
+
     public function __construct($type, $label)
     {
-        if (!in_array($type, self::$_types)) {
+        if (!in_array($type, self::$types)) {
             throw new \InvalidArgumentException(
                 "'$type' is not a valid data type!"
             );
         }
-        $this->_type = $type;
-        $this->_label = $label;
+        $this->type = $type;
+        $this->label = $label;
     }
 
     public function getId()
     {
-        return $this->_label . $this->_type;
+        return $this->label . $this->type;
     }
 
     public function getLabel()
     {
-        return $this->_label;
+        return $this->label;
     }
 
     public function getType()
     {
-        return $this->_type;
+        return $this->type;
+    }
+
+    public function isValueValidType($value)
+    {
+        switch ($this->getType()) {
+        case self::TYPE_BOOLEAN:
+            $isValid = is_bool($value);
+            break;
+        case self::TYPE_DATE:
+        case self::TYPE_DATETIME:
+            $isValid = is_object($value) and get_class($value) == 'DateTime';
+            break;
+        case self::TYPE_NUMBER:
+            $isValid = is_numeric($value);
+            break;
+        case self::TYPE_STRING:
+            $isValid = is_string($value);
+            break;
+        default:
+            $isValid = false;
+        }
+
+        return $isValid;
     }
 
     public function __toString()
     {
-        return $this->_label;
+        return $this->label;
     }
 }
 
