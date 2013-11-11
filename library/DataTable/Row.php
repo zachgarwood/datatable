@@ -4,19 +4,19 @@ namespace DataTable;
 class Row
 {
     private
-        $_cells = array();
+        $cells = array();
 
     public function setCell(Cell $cell)
     {
-        $this->_cells[(string)$cell->getColumn()] = $cell;
-        ksort($this->_cells);
+        $this->cells[(string)$cell->getColumn()] = $cell;
+        ksort($this->cells);
 
         return $this;
     }
 
     public function getCells()
     {
-        return $this->_cells;
+        return $this->cells;
     }
 }
 
