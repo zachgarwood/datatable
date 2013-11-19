@@ -3,7 +3,7 @@ class DataTableTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->dataTable = new DataTable\Data;
+        $this->dataTable = new DataTable\Table;
     }
 
     public function testExceptionOnDuplicatColumns()

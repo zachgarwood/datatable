@@ -1,7 +1,7 @@
 <?php
 namespace DataTable;
 
-class Data
+class Table
 {
     private
         $columns = array(),
