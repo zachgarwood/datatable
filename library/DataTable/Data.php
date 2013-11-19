@@ -15,7 +15,6 @@ class Data
             );
         }
         $this->columns[(string)$column] = $column;
-        ksort($this->columns);
 
         return $this;
     }
