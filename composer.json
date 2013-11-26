@@ -1,7 +1,10 @@
 {
     "name": "zachgarwood/datatable",
     "description": "A basic PHP data table object",
-    "version": "0.3.0",
+    "keywords": [
+        "data",
+        "table"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -10,7 +13,7 @@
             "role": "Developer"
         }
     ],
-    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": ">=5.4.0"
     },
