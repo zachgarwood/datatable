@@ -1,6 +1,6 @@
 {
     "name": "zachgarwood/datatable",
-    "description": "A basic PHP data table object",
+    "description": "A PHP data table object",
     "keywords": [
         "data",
         "table"
@@ -13,6 +13,10 @@
             "role": "Developer"
         }
     ],
+    "support": {
+        "issues": "https://github.com/zachgarwood/datatable/issues",
+        "source": "https://github.com/zachgarwood/datatable"
+    },
     "prefer-stable": true,
     "require": {
         "php": ">=5.4"
