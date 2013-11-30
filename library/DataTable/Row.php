@@ -13,7 +13,7 @@
 namespace DataTable;
 
 /**
- * DataTable data table row
+ * Data table row
  */
 class Row
 {
