@@ -13,14 +13,52 @@
 namespace DataTable;
 
 /**
- * DataTable data table column
+ * Data table column
  */
 class Column
 {
+    /**
+     * Defines column's cell values as booleans
+     *
+     * @api
+     * @since 1.0.0
+     */
     const TYPE_BOOLEAN = 'boolean';
-    const TYPE_DATE = 'date';         // Cells of types date and datetime must
-    const TYPE_DATETIME = 'datetime'; // have DateTime objects as values.
+
+    /**
+     * Defines column's cell values as dates
+     *
+     * Note: TYPE_DATE values must be \DateTime objects
+     *
+     * @api
+     * @since 1.0.0
+     */
+    const TYPE_DATE = 'date';
+
+    /**
+     * Defines column's cell values as datetimes
+     *
+     * Note: TYPE_DATETIME values must be \DateTime objects
+     *
+     * @api
+     * @since 1.0.0
+     */
+    const TYPE_DATETIME = 'datetime';
+
+    /**
+     * Defines column's cell values as numbers
+     *
+     * @api
+     * @since 1.0.0
+     */
     const TYPE_NUMBER = 'number';
+
+    /**
+     * Defines column's cell values as strings
+     *
+     * @api
+     * @since 1.0.0
+     */
     const TYPE_STRING = 'string';
 
     /**
@@ -54,15 +92,16 @@ class Column
      *
      * @param string $type
      * @param string $label
-     * @throws InvalidArgumentException if supplied type is not one of those in
-     *      the types array
+     * @throws InvalidArgumentException if supplied type is not one of those in the types array
+     * @throws InvalidArgumentException if supplied label is not a string
      */
     public function __construct($type, $label)
     {
         if (!in_array($type, self::$types)) {
-            throw new \InvalidArgumentException(
-                "'$type' is not a valid data type!"
-            );
+            throw new \InvalidArgumentException("'$type' is not a valid data type!");
+        }
+        if (!is_string($label)) {
+            throw new \InvalidArgumentException("The column label must be a string!");
         }
         $this->type = $type;
         $this->label = $label;
@@ -104,7 +143,7 @@ class Column
     /**
      * Determines if the supplied value is of the correct type
      *
-     * Note: TYPE_DATE and TYPE_DATETIME values must be DateTime objects.
+     * Note: TYPE_DATE and TYPE_DATETIME values must be \DateTime objects.
      *
      * @api
      * @since 1.0.0

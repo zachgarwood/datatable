@@ -13,7 +13,7 @@
 namespace DataTable;
 
 /**
- * DataTable data table
+ * Data table
  */
 class Table
 {
@@ -39,9 +39,7 @@ class Table
     public function addColumn(Column $column)
     {
         if (array_key_exists((string)$column, $this->columns)) {
-            throw new \InvalidArgumentException(
-                "Column with label '$column' already exists!"
-            );
+            throw new \InvalidArgumentException("Column with label '$column' already exists!");
         }
         $this->columns[(string)$column] = $column;
 

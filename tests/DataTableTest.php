@@ -6,13 +6,16 @@ class DataTableTest extends \PHPUnit_Framework_TestCase
         $this->dataTable = new DataTable\Table;
     }
 
+    public function testExceptionOnColumnLabelNotString()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $column = new DataTable\Column(DataTable\Column::TYPE_BOOLEAN, null);
+    }
+
     public function testExceptionOnDuplicatColumns()
     {
         $this->setExpectedException('InvalidArgumentException');
-        $column = new DataTable\Column(
-            DataTable\Column::TYPE_BOOLEAN,
-            'test'
-        );
+        $column = new DataTable\Column(DataTable\Column::TYPE_BOOLEAN, 'test');
         $this->dataTable->addColumn($column);
         $this->dataTable->addColumn($column);
     }
@@ -20,14 +23,13 @@ class DataTableTest extends \PHPUnit_Framework_TestCase
     public function testAddColumn()
     {
         $beforeCount = count($this->dataTable->getColumns());
-        $column = new DataTable\Column(
-            DataTable\Column::TYPE_BOOLEAN,
-            'test'
-        );
+        $this->assertEquals($beforeCount, 0);
+
+        $column = new DataTable\Column(DataTable\Column::TYPE_BOOLEAN, 'test');
         $this->dataTable->addColumn($column);
         $afterCount = count($this->dataTable->getColumns());
-
         $this->assertEquals($beforeCount + 1, $afterCount);
+        $this->assertSame($column, reset($this->dataTable->getColumns()));
     }
 
     public function testFindColumn()
@@ -35,10 +37,7 @@ class DataTableTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->dataTable->findColumn('NOT A REAL LABEL'));
 
         $label = 'TEST LABEL';
-        $column = new DataTable\Column(
-            DataTable\Column::TYPE_STRING,
-            $label
-        );
+        $column = new DataTable\Column(DataTable\Column::TYPE_STRING, $label);
         $this->dataTable->addColumn($column);
         $this->assertSame($column, $this->dataTable->findColumn($label));
     }
@@ -46,19 +45,13 @@ class DataTableTest extends \PHPUnit_Framework_TestCase
     public function testExceptionOnInvalidColumnType()
     {
         $this->setExpectedException('InvalidArgumentException');
-        $column = new DataTable\Column(
-            'invalid column type',
-            'test'
-        );
+        $column = new DataTable\Column('invalid column type', 'test');
     }
 
     public function testColumnToStringReturnsLabel()
     {
         $label = 'test';
-        $column = new DataTable\Column(
-            DataTable\Column::TYPE_BOOLEAN,
-            $label
-        );
+        $column = new DataTable\Column(DataTable\Column::TYPE_BOOLEAN, $label);
 
         $this->assertEquals((string)$column, $column->getLabel());
     }
@@ -70,12 +63,16 @@ class DataTableTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(count($this->dataTable->getRows()), 1);
     }
 
+    public function testExceptionOnCellLabelNotString()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $column = new DataTable\Column(DataTable\Column::TYPE_BOOLEAN, 'test');
+        $cell = new DataTable\Cell($column, true, null);
+    }
+
     public function testSetCellWithSameColumnTypeOverridesPreviousCell()
     {
-        $column = new DataTable\Column(
-            DataTable\Column::TYPE_BOOLEAN,
-            'test'
-        );
+        $column = new DataTable\Column(DataTable\Column::TYPE_BOOLEAN, 'test');
         $cell1 = new DataTable\Cell($column, true);
         $cell2 = new DataTable\Cell($column, true);
         $row = new DataTable\Row;
