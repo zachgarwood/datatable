@@ -29,7 +29,9 @@ class DataTableTest extends \PHPUnit_Framework_TestCase
         $this->dataTable->addColumn($column);
         $afterCount = count($this->dataTable->getColumns());
         $this->assertEquals($beforeCount + 1, $afterCount);
-        $this->assertSame($column, reset($this->dataTable->getColumns()));
+
+        $columns = $this->dataTable->getColumns();
+        $this->assertSame($column, reset($columns));
     }
 
     public function testFindColumn()
@@ -79,8 +81,9 @@ class DataTableTest extends \PHPUnit_Framework_TestCase
         $row->setCell($cell1);
         $row->setCell($cell2);
 
-        $this->assertNotSame(reset($row->getCells()), $cell1);
-        $this->assertSame(reset($row->getCells()), $cell2);
+        $cells = $row->getCells();
+        $this->assertNotSame(reset($cells), $cell1);
+        $this->assertSame(reset($cells), $cell2);
     }
 
     public function testExceptionOnCellValueColumnTypeMismatch()
