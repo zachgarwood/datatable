@@ -104,4 +104,3 @@ class Table
         return $this->rows;
     }
 }
-

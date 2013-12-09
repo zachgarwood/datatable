@@ -72,4 +72,3 @@ class Cell
         return $this->column;
     }
 }
-

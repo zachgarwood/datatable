@@ -67,14 +67,13 @@ class Column
      *
      * @var string[] An array of the class's constants
      */
-    public static
-        $types = [
-            self::TYPE_BOOLEAN,
-            self::TYPE_DATE,
-            self::TYPE_DATETIME,
-            self::TYPE_NUMBER,
-            self::TYPE_STRING,
-        ];
+    public static $types = [
+        self::TYPE_BOOLEAN,
+        self::TYPE_DATE,
+        self::TYPE_DATETIME,
+        self::TYPE_NUMBER,
+        self::TYPE_STRING,
+    ];
 
     /**
      * @var string
@@ -154,21 +153,21 @@ class Column
     public function isValueValidType($value)
     {
         switch ($this->getType()) {
-        case self::TYPE_BOOLEAN:
-            $isValid = is_bool($value);
-            break;
-        case self::TYPE_DATE:
-        case self::TYPE_DATETIME:
-            $isValid = is_object($value) and get_class($value) == 'DateTime';
-            break;
-        case self::TYPE_NUMBER:
-            $isValid = is_numeric($value);
-            break;
-        case self::TYPE_STRING:
-            $isValid = is_string($value);
-            break;
-        default:
-            $isValid = false;
+            case self::TYPE_BOOLEAN:
+                $isValid = is_bool($value);
+                break;
+            case self::TYPE_DATE:
+            case self::TYPE_DATETIME:
+                $isValid = is_object($value) and get_class($value) == 'DateTime';
+                break;
+            case self::TYPE_NUMBER:
+                $isValid = is_numeric($value);
+                break;
+            case self::TYPE_STRING:
+                $isValid = is_string($value);
+                break;
+            default:
+                $isValid = false;
         }
 
         return $isValid;
@@ -185,4 +184,3 @@ class Column
         return $this->label;
     }
 }
-
