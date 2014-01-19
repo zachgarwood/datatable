@@ -68,11 +68,29 @@ class DataTableTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals((string)$column, $column->getLabel());
     }
 
-    public function testInsertRow()
+    public function testInsertRowWithRowObject()
     {
         $this->dataTable->insertRow(new Row);
 
         $this->assertEquals(count($this->dataTable->getRows()), 1);
+    }
+
+    public function testInsertRowWithArrayOfCellObjects()
+    {
+        $cells = [
+            new Cell(new Column(Column::TYPE_BOOLEAN, 'col1'), true),
+            new Cell(new Column(Column::TYPE_STRING, 'col2'), 'string'),
+        ];
+        $this->dataTable->insertRow($cells);
+        $this->assertEquals(count($this->dataTable->getRows()), 1);
+    }
+
+    public function testExceptionOnInsertRowWithInvalidArgument()
+    {
+        $this->dataTable->insertRow(new Row);
+        $this->dataTable->insertRow(array());
+        $this->setExpectedException('InvalidArgumentException');
+        $this->dataTable->insertRow(null);
     }
 
     public function testExceptionOnCellLabelNotString()

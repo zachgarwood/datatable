@@ -81,14 +81,27 @@ class Table
 
     /**
      * @api
+     * @since 1.1.0 Added ability to pass in an array of Cells
      * @since 1.0.0
      *
-     * @param Row $row
+     * @param Row $row|array of Cell
      * @return self
      */
-    public function insertRow(Row $row)
+    public function insertRow($row)
     {
-        $this->rows []= $row;
+        if ($row instanceof Row) {
+            $this->rows []= $row;
+        } elseif (is_array($row)) {
+            $newRow = new Row;
+            foreach ($row as $cell) {
+                $newRow->setCell($cell);
+            }
+            $this->insertRow($newRow);
+        } else {
+            throw new \InvalidArgumentException(
+                "Argument 1 must be an instance of DataTable\Row or an array of DataTable\Cell"
+            );
+        }
 
         return $this;
     }
