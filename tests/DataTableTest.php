@@ -38,7 +38,7 @@ class DataTableTest extends \PHPUnit_Framework_TestCase
 
     public function testFindColumn()
     {
-        $this->assertNull($this->dataTable->findColumn('NOT A REAL LABEL'));
+        $this->assertFalse($this->dataTable->findColumn('NOT A REAL LABEL'));
 
         $label = 'TEST LABEL';
         $column = new Column(Column::TYPE_STRING, $label);

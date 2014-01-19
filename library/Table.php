@@ -64,11 +64,11 @@ class Table
      * @since 1.0.0
      *
      * @param string $label
-     * @return Column|null Returns null if no column is found
+     * @return Column|false Returns false if no column is found
      */
     public function findColumn($label)
     {
-        $column = null;
+        $column = false;
         foreach ($this->getColumns() as $col) {
             if ($col->getLabel() == $label) {
                 $column = $col;
