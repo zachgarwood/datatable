@@ -1,21 +1,23 @@
 <?php
+namespace DataTable;
+
 class DataTableTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->dataTable = new DataTable\Table;
+        $this->dataTable = new Table;
     }
 
     public function testExceptionOnColumnLabelNotString()
     {
         $this->setExpectedException('InvalidArgumentException');
-        $column = new DataTable\Column(DataTable\Column::TYPE_BOOLEAN, null);
+        $column = new Column(Column::TYPE_BOOLEAN, null);
     }
 
     public function testExceptionOnDuplicatColumns()
     {
         $this->setExpectedException('InvalidArgumentException');
-        $column = new DataTable\Column(DataTable\Column::TYPE_BOOLEAN, 'test');
+        $column = new Column(Column::TYPE_BOOLEAN, 'test');
         $this->dataTable->addColumn($column);
         $this->dataTable->addColumn($column);
     }
@@ -25,7 +27,7 @@ class DataTableTest extends \PHPUnit_Framework_TestCase
         $beforeCount = count($this->dataTable->getColumns());
         $this->assertEquals($beforeCount, 0);
 
-        $column = new DataTable\Column(DataTable\Column::TYPE_BOOLEAN, 'test');
+        $column = new Column(Column::TYPE_BOOLEAN, 'test');
         $this->dataTable->addColumn($column);
         $afterCount = count($this->dataTable->getColumns());
         $this->assertEquals($beforeCount + 1, $afterCount);
@@ -39,28 +41,36 @@ class DataTableTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->dataTable->findColumn('NOT A REAL LABEL'));
 
         $label = 'TEST LABEL';
-        $column = new DataTable\Column(DataTable\Column::TYPE_STRING, $label);
+        $column = new Column(Column::TYPE_STRING, $label);
         $this->dataTable->addColumn($column);
         $this->assertSame($column, $this->dataTable->findColumn($label));
+    }
+
+    public function testColumnIdIsConcatenatedLabelAndType()
+    {
+        $type = Column::TYPE_STRING;
+        $label = 'LABEL';
+        $column = new Column($type, $label);
+        $this->assertSame($label . $type, $column->getId());
     }
 
     public function testExceptionOnInvalidColumnType()
     {
         $this->setExpectedException('InvalidArgumentException');
-        $column = new DataTable\Column('invalid column type', 'test');
+        $column = new Column('invalid column type', 'test');
     }
 
     public function testColumnToStringReturnsLabel()
     {
         $label = 'test';
-        $column = new DataTable\Column(DataTable\Column::TYPE_BOOLEAN, $label);
+        $column = new Column(Column::TYPE_BOOLEAN, $label);
 
         $this->assertEquals((string)$column, $column->getLabel());
     }
 
     public function testInsertRow()
     {
-        $this->dataTable->insertRow(new DataTable\Row);
+        $this->dataTable->insertRow(new Row);
 
         $this->assertEquals(count($this->dataTable->getRows()), 1);
     }
@@ -68,16 +78,16 @@ class DataTableTest extends \PHPUnit_Framework_TestCase
     public function testExceptionOnCellLabelNotString()
     {
         $this->setExpectedException('InvalidArgumentException');
-        $column = new DataTable\Column(DataTable\Column::TYPE_BOOLEAN, 'test');
-        $cell = new DataTable\Cell($column, true, null);
+        $column = new Column(Column::TYPE_BOOLEAN, 'test');
+        $cell = new Cell($column, true, null);
     }
 
     public function testSetCellWithSameColumnTypeOverridesPreviousCell()
     {
-        $column = new DataTable\Column(DataTable\Column::TYPE_BOOLEAN, 'test');
-        $cell1 = new DataTable\Cell($column, true);
-        $cell2 = new DataTable\Cell($column, true);
-        $row = new DataTable\Row;
+        $column = new Column(Column::TYPE_BOOLEAN, 'test');
+        $cell1 = new Cell($column, true);
+        $cell2 = new Cell($column, true);
+        $row = new Row;
         $row->setCell($cell1);
         $row->setCell($cell2);
 
@@ -88,10 +98,10 @@ class DataTableTest extends \PHPUnit_Framework_TestCase
 
     public function testExceptionOnCellValueColumnTypeMismatch()
     {
-        foreach (DataTable\Column::$types as $type) {
+        foreach (Column::$types as $type) {
             $this->setExpectedException('InvalidArgumentException');
-            $column = new DataTable\Column($type, 'test');
-            $cell = new DataTable\Cell($column, null);
+            $column = new Column($type, 'test');
+            $cell = new Cell($column, null);
         }
     }
 }

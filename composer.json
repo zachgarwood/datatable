@@ -1,10 +1,7 @@
 {
     "name": "zachgarwood/datatable",
     "description": "A PHP data table object",
-    "keywords": [
-        "data",
-        "table"
-    ],
+    "keywords": ["data", "table"],
     "license": "MIT",
     "authors": [
         {
@@ -17,17 +14,15 @@
         "issues": "https://github.com/zachgarwood/datatable/issues",
         "source": "https://github.com/zachgarwood/datatable"
     },
+    "autoload": {"psr-4": {"DataTable\\": "library/"}},
     "prefer-stable": true,
     "require": {
         "php": ">=5.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "~3.7",   
-        "satooshi/php-coveralls": "dev-master"
-    },
-    "autoload": {
-        "psr-0": {
-            "DataTable\\": "library/"
-        }
+        "pdepend/pdepend": "*",
+        "phpunit/phpunit": "*",
+        "satooshi/php-coveralls": "*",
+        "squizlabs/php_codesniffer": "*"
     }
 }
