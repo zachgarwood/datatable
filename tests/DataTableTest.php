@@ -114,13 +114,23 @@ class DataTableTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(reset($cells), $cell2);
     }
 
-    public function testExceptionOnCellValueColumnTypeMismatch()
+    /**
+     * @dataProvider provideColumnsOfEachDataType
+     */
+    public function testExceptionOnCellValueColumnTypeMismatch(Column $column)
     {
+        $this->setExpectedException('InvalidArgumentException');
+        $cell = new Cell($column, null);
+    }
+
+    public function provideColumnsOfEachDataType()
+    {
+        $columns = array();
         foreach (Column::$types as $type) {
-            $this->setExpectedException('InvalidArgumentException');
-            $column = new Column($type, 'test');
-            $cell = new Cell($column, null);
+            $columns []= [new Column($type, 'test')];
         }
+
+        return $columns;
     }
 }
 
