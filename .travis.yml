@@ -8,9 +8,9 @@ before_script:
   - php composer.phar install --dev --no-interaction
 
 script:
-  - vendor/bin/phpcs --standard=PSR2 -vvv library/
+  - vendor/bin/phpcs --standard=PSR2 library/
   - mkdir -p build/logs
   - vendor/bin/phpunit
 
 after_script:
-  - vendor/bin/coveralls --no-interaction -verbose
+  - vendor/bin/coveralls --no-interaction
